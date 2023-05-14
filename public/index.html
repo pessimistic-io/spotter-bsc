@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Recovery Setup for Pessimistic Spotter</title>
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/base-min.css">
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+
+	<style type="text/css">
+		body {
+			font-family: Arial;
+			width: 700px;
+			margin: auto;
+			
+		}
+		.inactive {
+			opacity: 0.5;
+		}
+
+		button {
+			margin: .5em;
+		}
+
+		li {
+			margin: 1em;
+		}
+
+		code {
+			font-family: monospace;
+			font-weight: bolder;
+		}
+
+        .button-secondary {
+            background: rgb(66, 184, 221);
+            /* this is a light blue */
+        }
+        .button-success {
+            background: rgb(28, 184, 65);
+            /* this is a green */
+        }
+        .button-warning {
+            background: rgb(223, 117, 20);
+            /* this is an orange */
+        }
+
+        @keyframes onSending {
+    		0% {
+        		background-color: rgb(66, 184, 221);
+    		}
+    		100% {
+        		background-color: cyan;
+    			}
+			}
+
+
+        .button-processing {
+        	animation: onSending 5s infinite;
+
+        	animation-play-state: running;
+
+
+
+        }
+	</style>
+
+</head>
+
+<body>
+
+
+	<h1>Recovery Setup </h1>
+	<h2>for Pessimistic Spotter</h2>
+
+	<note id="chain"></note>
+
+
+	<form id="protection_aave" style="display: none" onsubmit="return false" class="pure-form">
+		<legend></legend>
+		<ol>
+			<li>Create a retrieval wallet (<a href="https://support.metamask.io/hc/en-us/articles/360015289452-How-to-create-an-additional-account-in-your-wallet">how to</a>)</li>
+
+			<li id="addr_field">Put its address here: <input id="recovery_address" placeholder="retrieval address (0x.......)"> (auto-fill on changing account in metamask)</li>
+
+			<li id="set_fee">Set <code>maxFeePerGas</code> value: <input id="set_maxFeePerGas"  value=20 style="text-align: right">  GWEI</li>
+
+
+			<li>
+
+				<button id="send_eth" class="pure-button button-secondary" id="send_eth">send</button>
+
+				<input   type="text" id="eth_amount" placeholder="some" style="text-align: right"/> ETH to this adress to pay for fees
+
+				<div id="recovery_balance"></div>
+				<div id="recovery_fee_sum"></div>
+
+			</li>
+
+			<li><button id="approve_transfer" class="pure-button button-secondary">approve</button> transfer to retrieval address</li>
+
+			<li id="switch">use Metamask to switch to retrieval wallet for further actions </li>
+
+			<li><button id="sign_transfer" class="pure-button button-secondary" disabled >sign</button> a transaction to <b>transfer</b> asset to this adress </li>
+
+			<!-- <li><button id="sign_asset_approve" class="pure-button button-secondary" disabled >sign</button> a transaction to <b>approve</b> the protocol pool to access the asset </li> -->
+
+			<li><button id="sign_withdraw" class="pure-button button-secondary" disabled >sign</button> a transaction to <b>withdraw</b> underlying asset from the protocol</li>
+
+			<li><button class="pure-button button-secondary" id="send_back">submit</button> both transactions to pessimistic spotter (auto-submitting)</li>
+		</ol>
+
+		<note>Note: signed transactions will be mined only in case of risk</note>
+	</form>
+
+
+	<form id="protection_pancake" style="display: none" onsubmit="return false" class="pure-form">
+		<legend></legend>
+		<ol>
+			<li>Create a retrieval wallet (<a href="https://support.metamask.io/hc/en-us/articles/360015289452-How-to-create-an-additional-account-in-your-wallet">how to</a>)</li>
+
+			<li id="addr_field">Put its address here: <input id="recovery_address_bnb" placeholder="retrieval address (0x.......)"> (auto-fill on changing account in metamask)</li>
+
+			<li id="set_fee">Set <code>gasPrice</code> value: <input id="set_GasPrice"  value=3 style="text-align: right">  GWEI</li>
+
+
+			<li>
+
+				<button id="send_bnb" class="pure-button button-secondary" >send</button>
+
+				<input   type="text" id="bnb_amount" placeholder="some" style="text-align: right"/> BNB to this adress to pay for fees
+
+				<div id="recovery_balance_bnb"></div>
+				<div id="recovery_fee_sum_bnb"></div>
+
+			</li>
+
+			<li><button id="approve_pancake" class="pure-button button-secondary"  >approve</button> transfer to retrieval address</li>
+
+			<li id="switch">use Metamask to switch to retrieval wallet for further actions </li>
+
+			<li><button id="sign_transfer_from_pancake" class="pure-button button-secondary" disabled >sign</button> <b>transfer from</b> from main wallet to recovery </li>
+
+			<li><button id="sign_approve_asset_pancake" class="pure-button button-secondary" disabled >sign</button> <b>approve</b> to pancake pool</li>
+
+			<li><button id="sign_liquidation_pancake" class="pure-button button-secondary" disabled >sign</button> <b>liquidation</b> transaction </li>
+
+			<li><button class="pure-button button-secondary" id="send_back_pancake">submit</button> transactions to pessimistic spotter (auto-submitting)</li>
+		</ol>
+
+		<note>Note: signed transactions will be mined only in case of risk</note>
+	</form>
+
+
+	<div id="action"></div>
+
+
+	<form id="all_tokens" onsubmit="return false">
+		<legend id="me"></legend>
+
+
+		<ul class="active">
+			<!-- <li></li> -->
+		</ul>
+		<ul class="inactive">
+		</ul>
+	</form>
+
+
+	<button id="connect" class="pure-button pure-button-primary">connect wallet</button>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+<script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"
+        type="application/javascript"></script>
+
+<script type="text/javascript">window.abis = {}</script>
+<script type="text/javascript" src="/abi/erc20.js"></script>
+<script type="text/javascript" src="/abi/aave_pool.js"></script>
+<script type="text/javascript" src="/abi/pancake_router.js"></script>
+
+<script type="text/javascript" src="/client.js"></script>
+</html>

@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "@ethereumjs/rlp": "^4.0.1",
+    "@ethereumjs/tx": "^4.1.1",
+    "@ethereumjs/util": "^8.0.5",
+    "alchemy-sdk": "^2.6.3",
+    "axios": "^1.4.0",
+    "body": "^5.1.0",
+    "body-parser": "^1.20.2",
+    "compression": "^1.7.4",
+    "connect": "^3.7.0",
+    "cookie-session": "^2.0.0",
+    "dotenv": "^16.0.3",
+    "http-server": "^14.1.1",
+    "key-file-storage": "^2.2.10",
+    "serve-static": "^1.15.0"
+  }
+}
