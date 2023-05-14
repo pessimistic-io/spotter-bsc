@@ -21,28 +21,29 @@ In the future, Users can optionally utilize a wallet plug-in to enhance UX.
 
 ## Images of the Demo
 
-**img1**
+![Start screen of Saver](https://github.com/pessimistic-io/spotter-saver/blob/assets/images/img1.png)
 
 ### The start screen of Saver
 Saver asks the user to connect their wallet and automatically detects that user has deposited some funds on Pancake Swap as a liquidity provider.
 
-**img2**
+![Setup screen of Saver](https://github.com/pessimistic-io/spotter-saver/blob/assets/images/img2.png)
 
 ### The setup screen of Saver 
 User goes through the setup. Saver needs the user to create the second wallet which is used exclusively for the defense purposes. *The second account is required so the user doesn’t have to re-sign the transactions every time they perform any on-chain activity which increases the nonce and hence deprecates the “defense” transactions.*
 The user then approves the transfer of the funds to the retrieval address, and signs the transactions that will then be used to withdraw their funds from Pancake Swap.
 
-**img3**
+
+![Emulation of an attack](https://github.com/pessimistic-io/spotter-saver/blob/assets/images/img3.png)
 
 ### Emulation of an attack on Pancake Swap
 We create and deploy the smart contract which emulates an attack on Pancake Swap pool. The smart contract is of course harmless and is created only to trigger Spotter. It is an obvious False Positive reaction which is impossible in production. We temporarily allow it for the purposes of demonstration.
 
-**img4**
+![Spotter reacts to the “attack”](https://github.com/pessimistic-io/spotter-saver/blob/assets/images/img4.png)
 
 ### Spotter reacts to the “attack”
 Spotter telegram bot indicates that there is an attack that soon will impact Pancake Swap.
 
-**img5** 
+![Mined withdrawal transaction](https://github.com/pessimistic-io/spotter-saver/blob/assets/images/img5.png)
 
 ### Saver broadcasts the withdrawal transaction
 The transaction is mined before the hacker activates the exploit.
